@@ -3,10 +3,12 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchProducts } from './productsSlice';
 import { useGetProductsQuery } from './productsApiSlice';
 import { addToCart } from '../cart/cartSlice';
+import { useFavorites } from '../favorites/FavoritesContext';
 import type { Product } from '../../types';
 
 function ProductList() {
   const dispatch = useAppDispatch();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [useRTKQuery, setUseRTKQuery] = useState(false);
 
   // === createAsyncThunk approach ===
@@ -92,6 +94,13 @@ function ProductList() {
             <div key={product.id} className="product-card">
               <div className="product-img-wrapper">
                 <img src={product.image} alt={product.name} loading="lazy" />
+                <button
+                  className={`btn-fav ${isFavorite(product.id) ? 'active' : ''}`}
+                  onClick={() => toggleFavorite(product)}
+                  title={isFavorite(product.id) ? 'Bỏ yêu thích' : 'Yêu thích'}
+                >
+                  {isFavorite(product.id) ? '❤️' : '🤍'}
+                </button>
               </div>
               <div className="product-info">
                 <h3>{product.name}</h3>
