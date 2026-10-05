@@ -757,3 +757,41 @@
     border-top: 1px solid var(--border-color);
   }
 }
+
+/* ===== VIRTUAL GRID (react-window) ===== */
+.virtual-grid {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  border-radius: var(--radius-lg);
+}
+
+.virtual-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.virtual-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.virtual-grid::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
+}
+
+.virtual-grid .product-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.virtual-grid .product-info {
+  flex: 1;
+}
+
+/* ===== SIDEBAR LOADING ===== */
+.sidebar-loading {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+}

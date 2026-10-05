@@ -1,8 +1,19 @@
+import { lazy, Suspense } from 'react';
 import ProductList from './features/products/ProductList';
-import Cart from './features/cart/Cart';
-import FavoritesList from './features/favorites/FavoritesList';
 import { FavoritesProvider } from './features/favorites/FavoritesContext';
 import './App.css';
+
+const Cart = lazy(() => import('./features/cart/Cart'));
+const FavoritesList = lazy(() => import('./features/favorites/FavoritesList'));
+
+function SidebarFallback() {
+  return (
+    <div className="sidebar-loading">
+      <div className="skeleton-text" style={{ height: 24, marginBottom: 12 }} />
+      <div className="skeleton-text" style={{ height: 80 }} />
+    </div>
+  );
+}
 
 function App() {
   return (
@@ -18,8 +29,10 @@ function App() {
         <main className="app-main">
           <ProductList />
           <aside className="sidebar">
-            <Cart />
-            <FavoritesList />
+            <Suspense fallback={<SidebarFallback />}>
+              <Cart />
+              <FavoritesList />
+            </Suspense>
           </aside>
         </main>
       </div>

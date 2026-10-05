@@ -14,9 +14,6 @@ const initialState: ProductsState = {
   error: null,
 };
 
-/**
- * Async thunk lấy danh sách sản phẩm từ mock API
- */
 export const fetchProducts = createAsyncThunk(
   'products/fetchAll',
   async () => {

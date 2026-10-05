@@ -13,7 +13,6 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    /** Thêm sản phẩm vào giỏ — nếu đã có thì tăng quantity */
     addToCart: (state, action: PayloadAction<Product>) => {
       const existing = state.items.find((item) => item.id === action.payload.id);
       if (existing) {
@@ -23,12 +22,10 @@ const cartSlice = createSlice({
       }
     },
 
-    /** Xoá sản phẩm khỏi giỏ theo productId */
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
     },
 
-    /** Cập nhật số lượng sản phẩm — nếu quantity <= 0 thì xoá */
     updateQuantity: (
       state,
       action: PayloadAction<{ productId: number; quantity: number }>
@@ -44,7 +41,6 @@ const cartSlice = createSlice({
       }
     },
 
-    /** Xoá toàn bộ giỏ hàng */
     clearCart: (state) => {
       state.items = [];
     },
@@ -54,7 +50,6 @@ const cartSlice = createSlice({
 export const { addToCart, removeFromCart, updateQuantity, clearCart } =
   cartSlice.actions;
 
-// Selectors — dùng inline type thay vì import RootState để tránh circular dependency
 export const selectCartItems = (state: { cart: CartState }) => state.cart.items;
 export const selectCartTotal = (state: { cart: CartState }) =>
   state.cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0);

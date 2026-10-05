@@ -2,10 +2,6 @@ import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { Product } from '../../types';
 import { fetchProductsFromAPI } from '../../mocks/products';
 
-/**
- * RTK Query API — cách thay thế createAsyncThunk
- * Sử dụng fakeBaseQuery vì dùng mock data, không có backend thật
- */
 export const productsApi = createApi({
   reducerPath: 'productsApi',
   baseQuery: fakeBaseQuery(),

@@ -7,12 +7,10 @@ import {
 } from 'react';
 import type { Product } from '../../types';
 
-// ========== Action Types ==========
 type FavoritesAction =
   | { type: 'TOGGLE_FAVORITE'; payload: Product }
   | { type: 'CLEAR_FAVORITES' };
 
-// ========== State ==========
 interface FavoritesState {
   items: Product[];
 }
@@ -21,7 +19,6 @@ const initialState: FavoritesState = {
   items: [],
 };
 
-// ========== Reducer (mini-Redux pattern) ==========
 function favoritesReducer(
   state: FavoritesState,
   action: FavoritesAction
@@ -47,7 +44,6 @@ function favoritesReducer(
   }
 }
 
-// ========== Context ==========
 interface FavoritesContextValue {
   favorites: Product[];
   favoriteCount: number;
@@ -58,7 +54,6 @@ interface FavoritesContextValue {
 
 const FavoritesContext = createContext<FavoritesContextValue | null>(null);
 
-// ========== Provider ==========
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(favoritesReducer, initialState);
 
@@ -82,7 +77,6 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// ========== Custom Hook ==========
 export function useFavorites(): FavoritesContextValue {
   const context = useContext(FavoritesContext);
   if (!context) {
@@ -90,19 +84,3 @@ export function useFavorites(): FavoritesContextValue {
   }
   return context;
 }
-
-/*
- * ====================================================================
- * SO SÁNH: Context + useReducer  vs  Redux Toolkit
- * ====================================================================
- *  Ưu điểm của Context + useReducer: Không cần cài thêm thư viện, code gọn nhẹ,
- *    phù hợp state nhỏ/vừa (favorites). useMemo tối ưu re-render.
- *    useReducer giúp quản lý action rõ ràng giống Redux.
- *  Nhược điểm: Không có DevTools, middleware (thunk/saga), hay
- *    selector memoized sẵn. Khi state phức tạp hoặc nhiều consumer,
- *    Context gây re-render toàn bộ subtree (phải tách Provider).
- *  Redux Toolkit mạnh hơn ở scale lớn: DevTools debug time-travel,
- *    createAsyncThunk cho async, RTK Query cho data fetching, và
- *    selector reselect có sẵn. Nhưng overkill cho state đơn giản.
- * ====================================================================
- */
