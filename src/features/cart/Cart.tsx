@@ -1,18 +1,14 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  removeFromCart,
-  updateQuantity,
-  clearCart,
-  selectCartItems,
-  selectCartTotal,
-  selectCartItemCount,
-} from './cartSlice';
+import { useCart } from './useCart';
 
 function Cart() {
-  const dispatch = useAppDispatch();
-  const items = useAppSelector(selectCartItems);
-  const total = useAppSelector(selectCartTotal);
-  const itemCount = useAppSelector(selectCartItemCount);
+  const {
+    items,
+    total,
+    itemCount,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+  } = useCart();
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat('vi-VN', {
@@ -30,7 +26,7 @@ function Cart() {
         {items.length > 0 && (
           <button
             className="btn btn-clear"
-            onClick={() => dispatch(clearCart())}
+            onClick={clearCart}
           >
             Xoá tất cả
           </button>
@@ -58,12 +54,7 @@ function Cart() {
                     <button
                       className="btn-qty"
                       onClick={() =>
-                        dispatch(
-                          updateQuantity({
-                            productId: item.id,
-                            quantity: item.quantity - 1,
-                          })
-                        )
+                        updateQuantity(item.id, item.quantity - 1)
                       }
                     >
                       −
@@ -72,12 +63,7 @@ function Cart() {
                     <button
                       className="btn-qty"
                       onClick={() =>
-                        dispatch(
-                          updateQuantity({
-                            productId: item.id,
-                            quantity: item.quantity + 1,
-                          })
-                        )
+                        updateQuantity(item.id, item.quantity + 1)
                       }
                     >
                       +
@@ -88,8 +74,9 @@ function Cart() {
                   </p>
                   <button
                     className="btn btn-remove"
-                    onClick={() => dispatch(removeFromCart(item.id))}
+                    onClick={() => removeFromCart(item.id)}
                     title="Xoá"
+                    aria-label="Xoá"
                   >
                     🗑️
                   </button>

@@ -33,6 +33,7 @@ const ProductCard = memo(function ProductCard({
             className={`btn-fav ${isFav ? 'active' : ''}`}
             onClick={() => onToggleFavorite(product)}
             title={isFav ? 'Bỏ yêu thích' : 'Yêu thích'}
+            aria-label={isFav ? 'Bỏ yêu thích' : 'Yêu thích'}
           >
             {isFav ? '❤️' : '🤍'}
           </button>
